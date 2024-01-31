@@ -2,35 +2,30 @@ version: '3.8'
 
 services:
   # MySQL 컨테이너 정의
-  mysqldb:
+  mysqldb: 
     container_name: mysqldb
-    image: mysql
+    image: mysql:latest
+    restart: always
     ports:
       - "3306:3306"
-    environment:
-      TZ: Asia/Seoul
-      MYSQL_DATABASE: watersaver
-      MYSQL_ROOT_PASSWORD: watersaver
-      MYSQL_ROOT_HOST: "%"
+    env_file:
+      - db.env
     volumes:
       - ./backup:/var/lib/mysql
-    networks:
-      - default
-      - app-tier
+
 
   # FastAPI 애플리케이션 컨테이너 정의
   fastapi:
     build:
       context: .
       target: final  # Dockerfile에서 최종 레이어를 사용
-    ports:
-      - "8000:8000"
+    restart: always
+    environment:
+      - MYSQLCLIENT_CFLAGS="-I/usr/include/mysql"
+      - MYSQLCLIENT_LDFLAGS="-L/usr/lib/x86_64-linux-gnu -lmysqlclient"
     depends_on:
       - mysqldb  # FastAPI가 MySQL에 의존
-    networks:
-      - app-tier
-
-# 네트워크 설정 (기본값이 사용되며 필요에 따라 수정 가능)
-networks:
-  app-tier:
-    driver: bridge
+    links:
+      - mysqldb
+    ports:
+      - "8000:8000"

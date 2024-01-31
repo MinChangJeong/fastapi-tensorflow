@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 # MySQL 컨테이너 정보에 맞게 수정
 MYSQL_USERNAME = "root"
 MYSQL_PASSWORD = "watersaver"
-MYSQL_HOST = "127.0.0.1"
+MYSQL_HOST = "mysqldb"
 MYSQL_PORT = "3306"
 MYSQL_DATABASE = "watersaver"
 
