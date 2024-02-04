@@ -1,6 +1,8 @@
 from alembic import op
 from sqlalchemy.sql import text
 from typing import Sequence, Union
+import random
+from datetime import datetime, timedelta
 
 from alembic import op
 import sqlalchemy as sa
@@ -18,20 +20,26 @@ def upgrade():
     connection = op.get_bind()
 
     # 테스트 데이터를 생성하고 삽입합니다.
-    test_data = [
-        {'user_id': 1, 'date': '2024-01-21', 'amount': 3000.0, 'time': 100, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-22', 'amount': 4000.0, 'time': 220, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-23', 'amount': 5000.0, 'time': 120, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-24', 'amount': 6000.0, 'time': 220, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-25', 'amount': 7000.0, 'time': 203, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-26', 'amount': 1000.0, 'time': 202, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-27', 'amount': 3200.0, 'time': 120, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-28', 'amount': 3300.0, 'time': 200, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-29', 'amount': 3400.0, 'time': 200, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-30', 'amount': 3500.0, 'time': 230, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-01-31', 'amount': 3600.0, 'time': 500, 'tax': 11000.0},
-        {'user_id': 1, 'date': '2024-02-01', 'amount': 3700.0, 'time': 200, 'tax': 11000.0},
-    ]
+    start_date = datetime(2023, 12, 1)
+    end_date = datetime(2024, 1, 31)
+
+    test_data = []
+
+    for _ in range((end_date - start_date).days + 1):
+        random_date = start_date + timedelta(days=random.randint(0, (end_date - start_date).days))
+        random_amount = round(random.uniform(1000, 30000), 2)
+        random_time = random.randint(10, 250)
+        random_tax = round(random.uniform(30, 3000), 2)
+
+        data = {
+            'user_id': 1,
+            'date': random_date.strftime('%Y-%m-%d'),
+            'amount': random_amount,
+            'time': random_time,
+            'tax': random_tax,
+        }
+
+        test_data.append(data)
 
     for data in test_data:
         connection.execute(

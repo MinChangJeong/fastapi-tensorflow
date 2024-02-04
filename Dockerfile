@@ -4,7 +4,6 @@ FROM python:3.9-slim AS base
 # 작업 디렉토리 설정
 WORKDIR /
 
-
 # 필요한 라이브러리 설치 (레이어 1)
 RUN apt-get update \
     && apt-get install gcc default-libmysqlclient-dev -y python3-dev pkg-config -y

@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.create_table('water_usage',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('date', sa.DateTime(), nullable=True),
+    sa.Column('date', sa.Date(), nullable=True),
     sa.Column('amount', sa.Float(), nullable=True),
     sa.Column('time', sa.Integer(), nullable=True),
     sa.Column('tax', sa.Float(), nullable=True),
