@@ -33,7 +33,7 @@ class DuringStatsRequest(BaseModel):
 
 class WaterTaxResponse(BaseModel): 
     date: str
-    tax: int
+    tax: float
 
 class DuringStatsResponse(BaseModel): 
     start_date: str

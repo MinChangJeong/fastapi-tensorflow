@@ -21,12 +21,15 @@ def upgrade():
 
     # 테스트 데이터를 생성하고 삽입합니다.
     start_date = datetime(2023, 12, 1)
-    end_date = datetime(2024, 1, 31)
+    end_date = datetime(2024, 2, 15)
 
     test_data = []
 
-    for _ in range((end_date - start_date).days + 1):
-        random_date = start_date + timedelta(days=random.randint(0, (end_date - start_date).days))
+ 
+    # Create a range of dates between start_date and end_date
+    date_range = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
+
+    for random_date in date_range:
         random_amount = round(random.uniform(1000, 30000), 2)
         random_time = random.randint(10, 250)
         random_tax = round(random.uniform(30, 3000), 2)

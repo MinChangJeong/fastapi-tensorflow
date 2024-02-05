@@ -6,7 +6,7 @@ WORKDIR /
 
 # 필요한 라이브러리 설치 (레이어 1)
 RUN apt-get update \
-    && apt-get install gcc default-libmysqlclient-dev -y python3-dev pkg-config -y
+    && apt-get install gcc libsndfile1 default-libmysqlclient-dev -y python3-dev pkg-config -y
 
 COPY . .
 

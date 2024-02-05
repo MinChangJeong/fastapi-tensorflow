@@ -62,7 +62,7 @@ async def get_monthly_stats(request: MonthlyStatsRequest, db: Session = Depends(
             ).filter(
             WaterUsage.user_id == request.userId,
             func.DATE_FORMAT(WaterUsage.date, '%Y-%m') == request.month
-        ).all()
+        ).order_by(WaterUsage.date).all()
 
         water_usage_list = [
             {
@@ -112,7 +112,7 @@ async def get_during_stats(request: DuringStatsRequest, db: Session = Depends(ge
             WaterUsage.user_id == request.userId,
             func.DATE_FORMAT(WaterUsage.date, '%Y-%m-%d') >= request.start_date,
             func.DATE_FORMAT(WaterUsage.date, '%Y-%m-%d') <= request.end_date
-        ).all()
+        ).order_by(WaterUsage.date).all()
 
         water_tax_list = [
             {
